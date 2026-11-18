@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Navwithin Demo Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout concept: one calm reading column. A screen map up front, then icon-led reference cards, then people-focused benefits. */
+:root {
+  --bg: #f3f6fa;
+  --surface: #ffffff;
+  --ink: #0f172a;
+  --mut: #53627a;
+  --line: #dbe4ef;
+  --accent: #2563eb;
+  --accent-ink: #1d4fc4;
+  --accent-soft: #e7effd;
+  --warm: #b45309;
+  --warm-soft: #fdf1df;
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1220; --surface: #111b2d; --ink: #e8eefc; --mut: #9aabc6; --line: #23324b;
+    --accent: #6f9eff; --accent-ink: #9dbcff; --accent-soft: #15264a; --warm: #f0b25a; --warm-soft: #2a2114;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1220; --surface: #111b2d; --ink: #e8eefc; --mut: #9aabc6; --line: #23324b;
+  --accent: #6f9eff; --accent-ink: #9dbcff; --accent-soft: #15264a; --warm: #f0b25a; --warm-soft: #2a2114;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; }
+a { color: var(--accent-ink); text-underline-offset: 3px; }
+.i { width: 1.25em; height: 1.25em; flex: none; display: block; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.015em; line-height: 1.15; margin: 0; }
+p { margin: 0; }
+code, .mono { font-family: var(--mono); font-size: 0.88em; }
+section { padding-top: 64px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+h2 { font-size: clamp(26px, 4vw, 34px); font-weight: 800; margin-top: 8px; }
+.lead { color: var(--mut); max-width: 62ch; margin-top: 12px; }
+
+/* hero */
+.hero { padding-top: max(40px, 6vw); }
+.hero h1 { font-size: clamp(38px, 7vw, 64px); font-weight: 800; margin-top: 14px; }
+.hero h1 span { color: var(--accent); }
+.hero .lead { font-size: 18px; max-width: 58ch; }
+.cta { display: inline-flex; gap: 10px; align-items: center; margin-top: 26px; background: var(--accent); color: #fff; padding: 13px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; }
+.cta:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; display: flex; gap: 8px; align-items: baseline; }
+.fact b { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--mut); font-size: 14px; }
+
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 26px; counter-reset: s; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; position: relative; }
+.step .chip { margin-bottom: 14px; }
+.step h3 { font-size: 19px; font-weight: 700; }
+.step h3::before { counter-increment: s; content: counter(s) ". "; color: var(--accent-ink); }
+.step p { color: var(--mut); margin-top: 8px; font-size: 15px; }
+
+.chip { width: 42px; height: 42px; border-radius: 11px; background: var(--accent-soft); color: var(--accent-ink); display: grid; place-items: center; flex: none; }
+.chip .i { width: 22px; height: 22px; }
+.chip.warm { background: var(--warm-soft); color: var(--warm); }
+
+/* screen map */
+.screen { position: relative; margin-top: 26px; aspect-ratio: 16 / 9; min-height: 300px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(160deg, var(--accent-soft), var(--surface)); overflow: hidden; }
+.zone { position: absolute; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08); display: flex; align-items: center; gap: 6px; padding: 5px 8px; font-size: 11px; font-weight: 600; color: var(--mut); }
+.zone .i { width: 14px; height: 14px; color: var(--accent-ink); }
+.badge { position: absolute; top: -9px; left: -9px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; box-shadow: 0 0 0 3px var(--surface); }
+.z-a { left: 3%; top: 6%; width: 27%; height: 58%; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 7px; padding: 12px; }
+.z-a .bar { height: 8px; border-radius: 4px; background: var(--line); width: 100%; }
+.z-a .bar.s { width: 62%; }
+.z-b { right: 3%; top: 5%; height: 9%; min-height: 30px; width: 36%; justify-content: space-around; }
+.z-c { left: 35%; top: 5%; height: 9%; min-height: 30px; width: 23%; justify-content: center; border-color: var(--accent); }
+.z-d { right: 3%; top: 22%; width: 7%; min-width: 40px; height: 44%; flex-direction: column; justify-content: space-around; padding: 6px 4px; }
+.z-e { left: 34%; bottom: 5%; width: 24%; height: 10%; min-height: 30px; justify-content: space-around; }
+.z-f { right: 12%; bottom: 5%; width: 16%; height: 28%; flex-direction: column; justify-content: center; }
+.z-g { left: 3%; bottom: 5%; width: 9%; min-width: 46px; height: 11%; min-height: 30px; justify-content: center; }
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 24px; margin-top: 22px; }
+.legend div { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: var(--mut); }
+.legend b { color: var(--ink); }
+.legend .lb { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 800; display: grid; place-items: center; margin-top: 2px; }
+
+/* reference groups */
+.group { margin-top: 36px; }
+.group > h3 { font-size: 22px; font-weight: 800; display: flex; gap: 12px; align-items: center; }
+.group > p { color: var(--mut); margin-top: 6px; max-width: 64ch; }
+.rows { margin-top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.row { display: grid; grid-template-columns: 42px 1fr; gap: 16px; padding: 16px 18px; align-items: start; }
+.row + .row { border-top: 1px solid var(--line); }
+.row h4 { margin: 0; font-size: 16px; font-weight: 700; }
+.row p { color: var(--mut); font-size: 15px; margin-top: 3px; }
+.row p b { color: var(--ink); font-weight: 600; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pill { border: 1px solid var(--line); border-radius: 99px; padding: 2px 10px; font-size: 13px; font-weight: 600; color: var(--ink); display: inline-flex; gap: 6px; align-items: center; background: var(--bg); }
+.pill i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.inline-ic { display: inline-flex; vertical-align: -4px; margin: 0 2px; color: var(--accent-ink); }
+.inline-ic .i { width: 18px; height: 18px; }
+.sample { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.sample svg { flex: none; }
+
+/* tables */
+.tablebox { margin-top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 520px; }
+th, td { text-align: left; padding: 13px 18px; font-size: 15px; vertical-align: top; }
+th { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mut); font-weight: 700; background: var(--bg); }
+tr + tr td { border-top: 1px solid var(--line); }
+tr.grp td { background: var(--accent-soft); color: var(--accent-ink); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; }
+td .kbd + .kbd { margin-left: 4px; }
+td:first-child { white-space: nowrap; }
+td { color: var(--mut); }
+td b { color: var(--ink); }
+.kbd { font-family: var(--mono); font-size: 13px; font-weight: 600; background: var(--bg); border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 7px; padding: 2px 8px; color: var(--ink); display: inline-block; }
+.plus { color: var(--mut); padding: 0 3px; }
+.note { margin-top: 16px; background: var(--warm-soft); border-radius: 14px; padding: 16px 18px; color: var(--ink); font-size: 15px; display: flex; gap: 12px; }
+.note .i { color: var(--warm); margin-top: 2px; }
+
+/* benefits */
+.who { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 26px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.card h3 { font-size: 19px; font-weight: 700; display: flex; gap: 12px; align-items: center; }
+.card ul { margin: 14px 0 0; padding-left: 18px; color: var(--mut); display: grid; gap: 8px; font-size: 15px; }
+.card li::marker { color: var(--accent); }
+.card li b { color: var(--ink); font-weight: 600; }
+.easy { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 24px; }
+.easy div { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; }
+.easy b { display: block; font-size: 17px; font-weight: 700; }
+.easy span { color: var(--mut); font-size: 15px; }
+.links a { word-break: break-all; }
+footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--mut); font-size: 14px; }
+@media (max-width: 640px) {
+  .screen { aspect-ratio: auto; height: 420px; }
+  .row { grid-template-columns: 36px 1fr; gap: 12px; padding: 14px; }
+  .chip { width: 36px; height: 36px; }
+}
+@media (prefers-reduced-motion: no-preference) { .cta { transition: transform .15s ease; } .cta:hover { transform: translateY(-2px); } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">User guide</div>
+  <h1>Navwithin <span>Demo</span></h1>
+  <p class="lead">An interactive 2D and 3D map of a hospital. A visitor searches for a place, sees the route, and can walk it on screen or carry it on a phone. This guide explains every control, who it helps, and how to use it.</p>
+  <a class="cta" href="https://sankeerthchelley.github.io/navwithin-demo-live/" target="_blank" rel="noopener"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> Open the live demo</a>
+  <div class="facts">
+    <div class="fact"><b>3</b><span>floors</span></div>
+    <div class="fact"><b>65</b><span>places</span></div>
+    <div class="fact"><b>14</b><span>doctors</span></div>
+    <div class="fact"><b>2</b><span>languages</span></div>
+    <div class="fact"><b>6</b><span>demo routes</span></div>
+  </div>
+</header>
+
+<section id="start">
+  <div class="eyebrow">Quick start</div>
+  <h2>Reach any room in three steps</h2>
+  <p class="lead">The same three steps work on a desktop, a phone and a lobby touch screen.</p>
+  <div class="steps">
+    <div class="step"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></div><h3>Search or tap</h3><p>Type a department, a doctor or a room code such as <code>ED-02</code>. You can also tap a room on the map or pick one from the directory.</p></div>
+    <div class="step"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg></div><h3>Navigate</h3><p>Press <b>Navigate Here</b>. The route appears with distance, walking time, and written directions. Switch on step-free to avoid stairs.</p></div>
+    <div class="step"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg></div><h3>Walk it</h3><p>Press play for a first-person walkthrough. Or scan the QR code to carry the route on your phone.</p></div>
+  </div>
+</section>
+
+<section id="layout">
+  <div class="eyebrow">The screen</div>
+  <h2>Where everything is</h2>
+  <p class="lead">Letters on the sketch match the list below it. Dashed items appear only while a route is active.</p>
+
+  <div class="screen" role="img" aria-label="Sketch of the app screen showing the six control areas">
+    <div class="zone z-a"><span class="badge">A</span><div class="bar"></div><div class="bar s"></div><div class="bar"></div><div class="bar s"></div><div class="bar"></div></div>
+    <div class="zone z-c" style="border-style:dashed"><span class="badge">B</span><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"></path><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"></path><path d="M16 17h4"></path><path d="M4 13h4"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"></path><path d="m21 3-7 7"></path><path d="m3 21 7-7"></path><path d="M9 21H3v-6"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="5" height="5" x="3" y="3" rx="1"></rect><rect width="5" height="5" x="16" y="3" rx="1"></rect><rect width="5" height="5" x="3" y="16" rx="1"></rect><path d="M21 16h-3a2 2 0 0 0-2 2v3"></path><path d="M21 21v.01"></path><path d="M12 7v3a2 2 0 0 1-2 2H7"></path><path d="M3 12h.01"></path><path d="M12 3h.01"></path><path d="M12 16v.01"></path><path d="M16 12h1"></path><path d="M21 12v.01"></path><path d="M12 21v-1"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></div>
+    <div class="zone z-b"><span class="badge">C</span><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"></path><path d="M10 19v-3.96 3.15"></path><path d="M7 19h5"></path><rect width="6" height="10" x="16" y="12" rx="2"></rect></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 8h.01"></path><path d="M12 12h.01"></path><path d="M14 8h.01"></path><path d="M16 12h.01"></path><path d="M18 8h.01"></path><path d="M6 8h.01"></path><path d="M7 16h10"></path><path d="M8 12h.01"></path><rect width="20" height="16" x="2" y="4" rx="2"></rect></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg><b>EN</b></div>
+    <div class="zone z-d"><span class="badge">D</span><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="2" x2="5" y1="12" y2="12"></line><line x1="19" x2="22" y1="12" y2="12"></line><line x1="12" x2="12" y1="2" y2="5"></line><line x1="12" x2="12" y1="19" y2="22"></line><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="3"></circle></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path></svg><b>L2</b><b>L1</b><b>G</b></div>
+    <div class="zone z-e"><span class="badge">E</span><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg> 2D <svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg> 3D <svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg></div>
+    <div class="zone z-f" style="border-style:dashed"><span class="badge">F</span><svg width="30" height="38" viewBox="-0.45 -0.95 0.9 1.1" aria-hidden="true"><ellipse cx="0" cy="0" rx="0.36" ry="0.12" fill="#ddd9cf" stroke="#b9b4a6" stroke-width="0.016"/><path d="M0,-0.04 L0.271,-0.432 A0.33,0.33 0 1 0 -0.271,-0.432 Z" fill="#d9483a" stroke="#b23a2e" stroke-width="0.02" stroke-linejoin="round"/><circle cx="0" cy="-0.62" r="0.255" fill="#b8392c"/><g fill="#f2b93b" stroke="#c98a1c" stroke-width="0.012" stroke-linejoin="round"><rect x="-0.068" y="-0.56" width="0.058" height="0.14" rx="0.02"/><rect x="0.01" y="-0.56" width="0.058" height="0.14" rx="0.02"/><rect x="-0.137" y="-0.665" width="0.04" height="0.11" rx="0.02"/><rect x="0.097" y="-0.665" width="0.04" height="0.11" rx="0.02"/><rect x="-0.095" y="-0.67" width="0.19" height="0.13" rx="0.035"/><circle cx="0" cy="-0.745" r="0.078"/></g></svg>minimap</div>
+  </div>
+  <div class="legend">
+    <div><span class="lb">A</span><span><b>Search card.</b> Search box, category chips, quick demo routes and the directory. A small minus button folds it away.</span></div>
+    <div><span class="lb">B</span><span><b>Route bar.</b> Step-by-step controls that appear when a route is active.</span></div>
+    <div><span class="lb">C</span><span><b>Top bar.</b> Kiosk, phone view, refresh, keyboard shortcuts, demo data and the language switch.</span></div>
+    <div><span class="lb">D</span><span><b>Right column.</b> Camera controls, zoom readout, and the floor selector.</span></div>
+    <div><span class="lb">E</span><span><b>View bar.</b> Switch between 2D and 3D and turn labels on or off.</span></div>
+    <div><span class="lb">F</span><span><b>Minimap.</b> Shows the floor, your route and where you are while a route is active.</span></div>
+  </div>
+</section>
+
+<section id="controls">
+  <div class="eyebrow">Reference</div>
+  <h2>Every control, one by one</h2>
+  <p class="lead">Each icon below is the same one you see in the app.</p>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></span> Search and directory</h3>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></div><div><h4>Search box</h4><p>Finds departments, doctors, symptoms, appointment terms and room codes in English or Hindi. Results rank the best match first and name the doctor when one matches.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg></div><div><h4>Category chips</h4><p>Filter the map and the list by type. Rooms outside the chosen type fade, so the ones you want stand out.</p><div class="pills"><span class="pill"><i style="background:#e11d48"></i>Emergency &amp; ICU</span><span class="pill"><i style="background:#0d9488"></i>Specialist Clinics</span><span class="pill"><i style="background:#0284c7"></i>Imaging &amp; Scans</span><span class="pill"><i style="background:#d97706"></i>Amenities</span></div></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></div><div><h4>Quick demo routes</h4><p>One press loads a ready-made journey: <b>Cardiology Clinic (1A)</b> across two floors, <b>MRI &amp; CT Imaging</b> on the ground floor, and <b>Visit Willow Ward (L2)</b> to compare lift against stairs. Three more are in Demo Data.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></div><div><h4>Directory</h4><p>A list of the places on the floor you are viewing, each with its room code. Tap one to open its card and fly the camera to it.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path></svg></div><div><h4>Minimize</h4><p>Folds the search card down to one line so the map has the whole screen. The chevron next to the name opens it again.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg></span> Floors and views</h3>
+    <div class="rows">
+      <div class="row"><div class="chip"><b>G</b></div><div><h4>G, L1, L2</h4><p><b>G</b> holds emergency, imaging, lab, pharmacy and the main reception. <b>L1</b> holds outpatient clinics and rehab. <b>L2</b> holds surgery, intensive care and the inpatient wards. A small dot on a floor button means your route touches that floor.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg></div><div><h4>2D</h4><p>A flat architectural plan. Good for seeing the whole floor and for small screens.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg></div><div><h4>3D</h4><p>The full model with walls, doors and furniture. Switching between 2D and 3D keeps your route and floor.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg></div><div><h4>Labels</h4><p>Shows or hides the name pills on the map. Every room keeps a label when labels are on, and overlapping labels shift apart.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path></svg></span> Camera</h3>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path></svg></div><div><h4>Reset view</h4><p>Returns the camera to the default overview. The needle turns as you rotate the map.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="2" x2="5" y1="12" y2="12"></line><line x1="19" x2="22" y1="12" y2="12"></line><line x1="12" x2="12" y1="2" y2="5"></line><line x1="12" x2="12" y1="19" y2="22"></line><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="3"></circle></svg></div><div><h4>Go to start point</h4><p>Centers the map on where you are, which is the main reception unless you chose another start.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></div><div><h4>Zoom in and out</h4><p>The plus and minus buttons step the zoom. The readout under them shows the current level, for example <code>2.9X</code>.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"></path><path d="M10 19v-3.96 3.15"></path><path d="M7 19h5"></path><rect width="6" height="10" x="16" y="12" rx="2"></rect></svg></span> Top bar</h3>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"></path><path d="M10 19v-3.96 3.15"></path><path d="M7 19h5"></path><rect width="6" height="10" x="16" y="12" rx="2"></rect></svg></div><div><h4>Kiosk Screen</h4><p>Opens the touch-screen welcome page described under Kiosk mode. Shortcut: <span class="kbd">K</span>.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg></div><div><h4>Mobile view</h4><p>Shows the app inside a phone frame, already walking a route, with the phone layout described below. Shortcut: <span class="kbd">M</span>.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg></div><div><h4>Refresh</h4><p>Resets the demo: clears the route and selection, returns to the ground floor, empties the search and resets the camera. In the phone frame, the same icon restarts the walk.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 8h.01"></path><path d="M12 12h.01"></path><path d="M14 8h.01"></path><path d="M16 12h.01"></path><path d="M18 8h.01"></path><path d="M6 8h.01"></path><path d="M7 16h10"></path><path d="M8 12h.01"></path><rect width="20" height="16" x="2" y="4" rx="2"></rect></svg></div><div><h4>Keyboard shortcuts</h4><p>Opens the list of shortcuts. The <span class="kbd">?</span> key does the same from anywhere.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg></div><div><h4>Demo Data</h4><p>Browse and export the data behind the map. See Demo Data and export. Shortcut: <span class="kbd">D</span>.</p></div></div>
+      <div class="row"><div class="chip"><b style="font-size:13px">EN</b></div><div><h4>EN | हिन्दी</h4><p>Switches the whole interface, the directions and the room details between English and Hindi.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></span> Room card</h3>
+    <p>Click any room on the map or in the list.</p>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2v2"></path><path d="M5 2v2"></path><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><circle cx="20" cy="10" r="2"></circle></svg></div><div><h4>Details</h4><p>Name, code, floor, opening hours, live status, phone extension, whether it is step-free accessible, and the consultants who work there.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="5" height="5" x="3" y="3" rx="1"></rect><rect width="5" height="5" x="16" y="3" rx="1"></rect><rect width="5" height="5" x="3" y="16" rx="1"></rect><path d="M21 16h-3a2 2 0 0 0-2 2v3"></path><path d="M21 21v.01"></path><path d="M12 7v3a2 2 0 0 1-2 2H7"></path><path d="M3 12h.01"></path><path d="M12 3h.01"></path><path d="M12 16v.01"></path><path d="M16 12h1"></path><path d="M21 12v.01"></path><path d="M12 21v-1"></path></svg></div><div><h4>Instant Nav</h4><p>A small QR block on the card for continuing the journey on a phone.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg></div><div><h4>Navigate Here and Start From Here</h4><p><b>Navigate Here</b> makes a route from your start to this room and shows the walk time and distance. <b>Start From Here</b> moves your start point to this room.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg></span> Route planning</h3>
+    <p>Once a destination is chosen, the search card turns into the route panel.</p>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg></div><div><h4>From, To and swap</h4><p>Change the start from the drop-down, and use the swap button to reverse the journey for the walk back.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="4" r="1"></circle><path d="m18 19 1-7-6 1"></path><path d="m5 8 3-3 5.5 3-2.36 3.5"></path><path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path><path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path></svg></div><div><h4>Step-Free (Lift)</h4><p>On, the route uses lifts and avoids stairs. Off, it takes the fastest path and may use the Atrium Stairs. Flip it on the Willow Ward demo route to compare.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg></div><div><h4>Walk time, distance, levels</h4><p>Three figures at the top of the panel summarise the journey, and a chip shows the distance on each floor.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"></path><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg></div><div><h4>Turn-by-turn directions</h4><p>Written steps with icons for turns, <span class="inline-ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg></span> straight ahead, <span class="inline-ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 16-4 4-4-4"></path><path d="M17 20V4"></path><path d="m3 8 4-4 4 4"></path><path d="M7 4v16"></path></svg></span> lifts and stairs, and <span class="inline-ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"></path></svg></span> arrival. Tap a step to jump the camera to it.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg></div><div><h4>Simulate Walk and Phone QR</h4><p><b>Simulate Walk</b> starts the walkthrough. <b>Phone QR</b> opens the hand-off screen.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"></path><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"></path><path d="M16 17h4"></path><path d="M4 13h4"></path></svg></span> Walkthrough</h3>
+    <p>The bar at the top centre steps through the route one instruction at a time.</p>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></div><div><h4>Previous and next step</h4><p>Jump back or forward by one instruction. The bar shows the current step, the metres remaining and what comes next.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg></div><div><h4>Play and pause</h4><p>Starts or pauses the walk. The speed button beside it switches between <b>1x</b> and <b>2x</b>. Floors change by themselves when the route takes a lift or stairs.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"></path><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"></path><path d="M16 17h4"></path><path d="M4 13h4"></path></svg></div><div><h4>Follow camera</h4><p>Puts the camera behind the walker, looking along the route, like walking it yourself. Dragging or scrolling the map switches it off.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"></path><path d="m21 3-7 7"></path><path d="m3 21 7-7"></path><path d="M9 21H3v-6"></path></svg></div><div><h4>Zoom to route</h4><p>Pulls back so the whole route is in view.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="5" height="5" x="3" y="3" rx="1"></rect><rect width="5" height="5" x="16" y="3" rx="1"></rect><rect width="5" height="5" x="3" y="16" rx="1"></rect><path d="M21 16h-3a2 2 0 0 0-2 2v3"></path><path d="M21 21v.01"></path><path d="M12 7v3a2 2 0 0 1-2 2H7"></path><path d="M3 12h.01"></path><path d="M12 3h.01"></path><path d="M12 16v.01"></path><path d="M16 12h1"></path><path d="M21 12v.01"></path><path d="M12 21v-1"></path></svg></div><div><h4>QR and close</h4><p>The QR icon opens the phone hand-off. <span class="inline-ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></span> closes the route and returns the camera to the overview.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></div><div><h4>Menu button</h4><p>While a walk plays, the search card tucks away behind this three-line button at the top left so the map is clear. Press it to bring the card back.</p></div></div>
+    </div>
+    <div class="rows" style="margin-top:14px"><div class="row"><div class="chip warm"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg></div><div><h4>What you see on the floor</h4><p>The route is drawn as a train of chevrons. In each group the chevrons brighten toward the direction of travel. One arrow moves along the line. A red pin marks the destination.</p>
+      <div class="sample">
+        <svg width="64" height="132" viewBox="0 0 64 132" role="img" aria-label="Route chevrons, light at the front and dark at the back"><g stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M32 6 L58 22 L58 32 L32 16 L6 32 L6 22Z" fill="#b3c8f8"/><path d="M32 32 L58 48 L58 58 L32 42 L6 58 L6 48Z" fill="#90aff5"/><path d="M32 58 L58 74 L58 84 L32 68 L6 84 L6 74Z" fill="#6c96f2"/><path d="M32 84 L58 100 L58 110 L32 94 L6 110 L6 100Z" fill="#487cee"/><path d="M32 110 L58 126 L58 132 L6 132 L6 126Z" fill="#2563eb"/></g></svg>
+        <p style="margin:0">Dark at the back, light at the front, so the route always reads as moving forward.</p>
+      </div></div></div></div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg></span> Phone view</h3>
+    <p>A phone-sized layout that mirrors how the route looks on a visitor's own device.</p>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"></path><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"></path><path d="M16 17h4"></path><path d="M4 13h4"></path></svg></div><div><h4>Three stat pills</h4><p>Steps left, arrival time, and distance remaining. The step count and time are estimates from the distance.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path><path d="M9 14 4 9l5-5"></path></svg></div><div><h4>Upcoming-turn card</h4><p>A small card appears near the top left only when a turn, lift or stairs is within about 30 m. It names the move and the distance.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path></svg></div><div><h4>Half-circle minimap</h4><p>The whole floor in a dome at the bottom, with the route in blue, the destination in red, and the person-in-a-pin marker for you. The figure's legs swing while the walk plays.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 17H5"></path><path d="M19 7h-9"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></div><div><h4>Bottom controls</h4><p>Speed toggle on the left, a large play and pause button in the middle, and Share on the right to open the QR screen.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"></path><path d="M10 19v-3.96 3.15"></path><path d="M7 19h5"></path><rect width="6" height="10" x="16" y="12" rx="2"></rect></svg></span> Kiosk mode</h3>
+    <p>For a touch screen in the lobby.</p>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></div><div><h4>Welcome screen</h4><p>A full-screen page headed <b>Smart Wayfinding Kiosk · Main Lobby (G)</b> with a grid of large destination cards, each showing the name, floor, code and status. Tapping a card closes the kiosk and shows the route from Main Reception. The <b>Phone QR</b> button on the route panel then carries it to a phone.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="4" r="1"></circle><path d="m18 19 1-7-6 1"></path><path d="m5 8 3-3 5.5 3-2.36 3.5"></path><path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path><path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path></svg></div><div><h4>Step-Free Wheelchair Mode</h4><p>A single switch on the page that limits routes to lifts and step-free paths.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg></div><div><h4>Explore Interactive 2D / 3D Map</h4><p>Leaves the welcome page and opens the full map. A language button on the page flips between English and Hindi.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="5" height="5" x="3" y="3" rx="1"></rect><rect width="5" height="5" x="16" y="3" rx="1"></rect><rect width="5" height="5" x="3" y="16" rx="1"></rect><path d="M21 16h-3a2 2 0 0 0-2 2v3"></path><path d="M21 21v.01"></path><path d="M12 7v3a2 2 0 0 1-2 2H7"></path><path d="M3 12h.01"></path><path d="M12 3h.01"></path><path d="M12 16v.01"></path><path d="M16 12h1"></path><path d="M21 12v.01"></path><path d="M12 21v-1"></path></svg></span> Phone hand-off</h3>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="5" height="5" x="3" y="3" rx="1"></rect><rect width="5" height="5" x="16" y="3" rx="1"></rect><rect width="5" height="5" x="3" y="16" rx="1"></rect><path d="M21 16h-3a2 2 0 0 0-2 2v3"></path><path d="M21 21v.01"></path><path d="M12 7v3a2 2 0 0 1-2 2H7"></path><path d="M3 12h.01"></path><path d="M12 3h.01"></path><path d="M12 16v.01"></path><path d="M16 12h1"></path><path d="M21 12v.01"></path><path d="M12 21v-1"></path></svg></div><div><h4>Send the route to a phone</h4><p>A screen with a QR block and a share link that holds the start, destination and step-free choice. It opens straight in the phone's browser with no app to install. <b>Copy Shareable Route Link</b> puts the link on the clipboard.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg></span> Demo Data and export</h3>
+    <div class="rows">
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></div><div><h4>Demo Routes (6)</h4><p>Six prepared journeys you can launch in one press, for example <b>Car Park P1 → Maternity</b>, <b>ED Triage → Radiology X-Ray</b> and <b>Eye Centre (L1) → Pharmacy</b>.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></div><div><h4>Departments and rooms (65)</h4><p>The full list with codes, categories and floors. Inspect a room or start a route from here.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2v2"></path><path d="M5 2v2"></path><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><circle cx="20" cy="10" r="2"></circle></svg></div><div><h4>Doctor directory (14)</h4><p>Consultants with their specialty, clinic and schedule.</p></div></div>
+      <div class="row"><div class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg></div><div><h4>Export</h4><p>Copy or download the data as <b>Wayfinding JSON</b> (with the full routing graph), <b>Indoor GeoJSON</b> (RFC 7946) or <b>CSV</b>, so the same data can feed other systems.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="inputs">
+  <div class="eyebrow">Mouse, touch and keyboard</div>
+  <h2>Gestures and shortcuts</h2>
+  <p class="lead">Move the map with the mouse or touch. Everything else has a key. Press <span class="kbd">?</span> in the app for the same list.</p>
+
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Do this</th><th>To get this</th></tr></thead>
+      <tbody>
+        <tr><td><b>Drag</b></td><td>Orbit the 3D map. In 2D, pan the plan.</td></tr>
+        <tr><td><span class="kbd">Shift</span><span class="plus">+</span><b>drag</b></td><td>Pan the 3D map. A right-button or middle-button drag does the same.</td></tr>
+        <tr><td><b>Scroll</b></td><td>Zoom in and out, in both 2D and 3D.</td></tr>
+        <tr><td><b>Pinch</b></td><td>Zoom on a touch screen.</td></tr>
+        <tr><td><b>Click or tap a room</b></td><td>Open its card and fly the camera there.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Key</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="2">View</td></tr>
+        <tr><td><span class="kbd">2</span></td><td>Switch to the 2D plan.</td></tr>
+        <tr><td><span class="kbd">3</span></td><td>Switch to the 3D model.</td></tr>
+        <tr><td><span class="kbd">T</span></td><td>Show or hide the room labels.</td></tr>
+        <tr><td><span class="kbd">]</span></td><td>Go up one floor.</td></tr>
+        <tr><td><span class="kbd">[</span></td><td>Go down one floor.</td></tr>
+        <tr class="grp"><td colspan="2">Camera</td></tr>
+        <tr><td><span class="kbd">+</span></td><td>Zoom in. (The <span class="kbd">=</span> key works too.)</td></tr>
+        <tr><td><span class="kbd">−</span></td><td>Zoom out.</td></tr>
+        <tr><td><span class="kbd">R</span></td><td>Reset the view, the same as the compass button.</td></tr>
+        <tr><td><span class="kbd">L</span></td><td>Go to your start point, the same as the locate button.</td></tr>
+        <tr class="grp"><td colspan="2">Route</td></tr>
+        <tr><td><span class="kbd">Enter</span></td><td>Navigate to the room whose card is open.</td></tr>
+        <tr><td><span class="kbd">Space</span></td><td>Play or pause the walkthrough.</td></tr>
+        <tr><td><span class="kbd">←</span> <span class="kbd">→</span></td><td>Previous or next step.</td></tr>
+        <tr><td><span class="kbd">F</span></td><td>Turn the follow camera on or off.</td></tr>
+        <tr><td><span class="kbd">V</span></td><td>Switch the walk speed between 1x and 2x.</td></tr>
+        <tr><td><span class="kbd">S</span></td><td>Turn step-free (lift) routing on or off. The route updates at once.</td></tr>
+        <tr><td><span class="kbd">X</span></td><td>Close the route.</td></tr>
+        <tr class="grp"><td colspan="2">Panels</td></tr>
+        <tr><td><span class="kbd">/</span></td><td>Jump to the search box.</td></tr>
+        <tr><td><span class="kbd">K</span></td><td>Open the kiosk screen.</td></tr>
+        <tr><td><span class="kbd">M</span></td><td>Open the mobile view.</td></tr>
+        <tr><td><span class="kbd">D</span></td><td>Open Demo Data.</td></tr>
+        <tr><td><span class="kbd">H</span></td><td>Switch between English and हिन्दी.</td></tr>
+        <tr><td><span class="kbd">?</span></td><td>Show or hide the shortcut list.</td></tr>
+        <tr><td><span class="kbd">Esc</span></td><td>Close what is open, topmost first: the shortcut list, the QR screen, the phone view, Demo Data, the kiosk, then the selected room card.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><span><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 8h.01"></path><path d="M12 12h.01"></path><path d="M14 8h.01"></path><path d="M16 12h.01"></path><path d="M18 8h.01"></path><path d="M6 8h.01"></path><path d="M7 16h10"></path><path d="M8 12h.01"></path><rect width="20" height="16" x="2" y="4" rx="2"></rect></svg></span><p><b>Shortcuts step aside when they would get in the way.</b> They pause while you type in the search box and while a pop-up is open. Combinations with <span class="kbd">Ctrl</span> or <span class="kbd">⌘</span> are left to the browser, so page zoom and reload still work. Inside the phone frame, only <span class="kbd">Space</span> and <span class="kbd">V</span> apply.</p></div>
+
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Browser keys that also work</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">Tab</span> <span class="kbd">Shift</span><span class="plus">+</span><span class="kbd">Tab</span></td><td>Moves focus through the buttons and the search box. A blue outline shows where you are.</td></tr>
+        <tr><td><span class="kbd">Enter</span> <span class="kbd">Space</span></td><td>Presses the button that has focus.</td></tr>
+        <tr><td><span class="kbd">Ctrl</span> / <span class="kbd">⌘</span><span class="plus">+</span><span class="kbd">+</span> <span class="kbd">−</span></td><td>Browser page zoom, handy for larger text on a kiosk.</td></tr>
+        <tr><td><span class="kbd">F11</span> or <span class="kbd">Ctrl</span><span class="plus">+</span><span class="kbd">⌘</span><span class="plus">+</span><span class="kbd">F</span></td><td>Browser full screen, which suits a lobby display.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="benefits">
+  <div class="eyebrow">Why it helps</div>
+  <h2>Benefits</h2>
+  <div class="who">
+    <div class="card"><h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg></span> Patients and visitors</h3><ul>
+      <li><b>Fewer wrong turns.</b> The route shows every corridor, door and floor change before the walk starts.</li>
+      <li><b>Written and visual.</b> Directions come as a map line, as step text, and as a walkthrough, so anyone can use the form that suits them.</li>
+      <li><b>Their own language.</b> English and Hindi, switched with one button.</li>
+      <li><b>Takes it along.</b> A QR code or link continues the route on a phone.</li>
+    </ul></div>
+    <div class="card"><h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="4" r="1"></circle><path d="m18 19 1-7-6 1"></path><path d="m5 8 3-3 5.5 3-2.36 3.5"></path><path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path><path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path></svg></span> Accessibility</h3><ul>
+      <li><b>Step-free routing.</b> One switch swaps stairs for lifts, and every room says whether it is step-free accessible.</li>
+      <li><b>Kiosk wheelchair mode.</b> Large controls and step-free routes only.</li>
+      <li><b>Compare both ways.</b> Staff can show the lift route and the stairs route side by side.</li>
+    </ul></div>
+    <div class="card"><h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg></span> Reception and staff</h3><ul>
+      <li><b>Fewer "where is…" questions.</b> Visitors can answer themselves at a kiosk or on their phone.</li>
+      <li><b>One thing to show.</b> Point at the screen instead of giving directions from memory.</li>
+      <li><b>Room cards</b> carry hours, status and extension numbers in one place.</li>
+    </ul></div>
+    <div class="card"><h3><span class="chip"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg></span> Hospital and product teams</h3><ul>
+      <li><b>One dataset drives everything.</b> 2D, 3D, search, routing and exports read the same data, so they never disagree.</li>
+      <li><b>Open exports.</b> JSON, GeoJSON and CSV for other tools.</li>
+      <li><b>Easy to show.</b> One link or one file demonstrates the idea to a client.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="easy">
+  <div class="eyebrow">Ease of use</div>
+  <h2>How easy is it?</h2>
+  <div class="easy">
+    <div><b>Nothing to install</b><span>It runs in a normal browser on a laptop, tablet, phone or kiosk.</span></div>
+    <div><b>One link or one file</b><span>The whole app is a single HTML file of about 1 MB. Send it, host it, or open it from disk.</span></div>
+    <div><b>No training</b><span>Search, press Navigate, press play. Controls use familiar icons, and many show a hover title.</span></div>
+    <div><b>Opens ready</b><span>A link can open a prepared route, floor, view or language.</span></div>
+    <div><b>Keyboard friendly</b><span>Every main action has a key, and <b>?</b> lists them.</span></div>
+  </div>
+</section>
+
+<section id="share">
+  <div class="eyebrow">Sharing</div>
+  <h2>Links that open a route</h2>
+  <p class="lead">Add options after the <code>#</code> in the address. They can be combined with <code>&amp;</code>.</p>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Option</th><th>Meaning</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><code>from</code></td><td>Start room</td><td><code>from=g-reception</code></td></tr>
+        <tr><td><code>to</code></td><td>Destination room</td><td><code>to=l1-cardio</code></td></tr>
+        <tr><td><code>stepFree</code></td><td>1 for lifts only, 0 to allow stairs</td><td><code>stepFree=1</code></td></tr>
+        <tr><td><code>floor</code></td><td>G, L1 or L2</td><td><code>floor=L1</code></td></tr>
+        <tr><td><code>view</code></td><td>2d for the plan (3D is the default)</td><td><code>view=2d</code></td></tr>
+        <tr><td><code>lang</code></td><td>hi for Hindi (English is the default)</td><td><code>lang=hi</code></td></tr>
+        <tr><td><code>kiosk</code></td><td>1 to open the kiosk welcome page</td><td><code>kiosk=1</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lead links" style="margin-top:18px">Try one: <a href="https://sankeerthchelley.github.io/navwithin-demo-live/#from=g-reception&amp;to=l1-cardio&amp;stepFree=1" target="_blank" rel="noopener">Reception to Cardiology, step-free</a> or <a href="https://sankeerthchelley.github.io/navwithin-demo-live/#kiosk=1" target="_blank" rel="noopener">the kiosk page</a>.</p>
+</section>
+
+<section id="notes">
+  <div class="eyebrow">Good to know</div>
+  <h2>What the demo is, and is not</h2>
+  <div class="rows">
+    <div class="row"><div class="chip warm"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"></path></svg></div><div><h4>Demo data</h4><p>The hospital, the doctors and the opening hours are made up for the demonstration.</p></div></div>
+    <div class="row"><div class="chip warm"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="5" height="5" x="3" y="3" rx="1"></rect><rect width="5" height="5" x="16" y="3" rx="1"></rect><rect width="5" height="5" x="3" y="16" rx="1"></rect><path d="M21 16h-3a2 2 0 0 0-2 2v3"></path><path d="M21 21v.01"></path><path d="M12 7v3a2 2 0 0 1-2 2H7"></path><path d="M3 12h.01"></path><path d="M12 3h.01"></path><path d="M12 16v.01"></path><path d="M16 12h1"></path><path d="M21 12v.01"></path><path d="M12 21v-1"></path></svg></div><div><h4>QR codes</h4><p>The QR blocks are a decorative pattern, so they will not scan yet. The copied share link works.</p></div></div>
+    <div class="row"><div class="chip warm"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="2" x2="5" y1="12" y2="12"></line><line x1="19" x2="22" y1="12" y2="12"></line><line x1="12" x2="12" y1="2" y2="5"></line><line x1="12" x2="12" y1="19" y2="22"></line><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="3"></circle></svg></div><div><h4>Position</h4><p>"You are here" is the chosen start point. The demo does not track a real phone or beacon, and the walk is a simulation along the route.</p></div></div>
+    <div class="row"><div class="chip warm"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></div><div><h4>Hindi and fonts</h4><p>The Hindi wording has not been reviewed by a native speaker. Fonts load from Google, so offline the text falls back to system fonts.</p></div></div>
+    <div class="row"><div class="chip warm"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg></div><div><h4>Phone view</h4><p>It is a preview frame inside the desktop page, so the layout can be shown without a phone.</p></div></div>
+  </div>
+</section>
+
+<footer>Built with React, Vite, Tailwind CSS and three.js. Routes use a shortest-path search over a graph of corridors, doors, lifts and stairs, with a step-free option.</footer>
+
+</div>
+</body>
+</html>
