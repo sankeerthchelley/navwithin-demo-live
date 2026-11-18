@@ -151,6 +151,8 @@ footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line);
 @media (prefers-reduced-motion: no-preference) { .cta { transition: transform .15s ease; } .cta:hover { transform: translateY(-2px); } }
 </style>
 
+<script>window.nwBeforeSend=function(t,p){return /mobile=1/.test(location.href)?null:p};</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="61aebc67-9379-434c-8a03-55fc57daece6" data-domains="sankeerthchelley.github.io" data-do-not-track="true" data-before-send="nwBeforeSend"></script>
 </head>
 <body>
 <div class="wrap">
@@ -159,7 +161,7 @@ footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line);
   <div class="eyebrow">User guide</div>
   <h1>Navwithin <span>Demo</span></h1>
   <p class="lead">An interactive 2D and 3D map of a hospital. A visitor searches for a place, sees the route, and can walk it on screen or carry it on a phone. This guide explains every control, who it helps, and how to use it.</p>
-  <a class="cta" href="https://sankeerthchelley.github.io/navwithin-demo-live/" target="_blank" rel="noopener"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> Open the live demo</a>
+  <a class="cta" data-umami-event="guide_open_demo" href="https://sankeerthchelley.github.io/navwithin-demo-live/" target="_blank" rel="noopener"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> Open the live demo</a>
   <div class="facts">
     <div class="fact"><b>3</b><span>floors</span></div>
     <div class="fact"><b>65</b><span>places</span></div>
@@ -455,7 +457,7 @@ footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line);
       </tbody>
     </table>
   </div>
-  <p class="lead links" style="margin-top:18px">Try one: <a href="https://sankeerthchelley.github.io/navwithin-demo-live/#from=g-reception&amp;to=l1-cardio&amp;stepFree=1" target="_blank" rel="noopener">Reception to Cardiology, step-free</a> or <a href="https://sankeerthchelley.github.io/navwithin-demo-live/#kiosk=1" target="_blank" rel="noopener">the kiosk page</a>.</p>
+  <p class="lead links" style="margin-top:18px">Try one: <a data-umami-event="guide_try_route" href="https://sankeerthchelley.github.io/navwithin-demo-live/#from=g-reception&amp;to=l1-cardio&amp;stepFree=1" target="_blank" rel="noopener">Reception to Cardiology, step-free</a> or <a data-umami-event="guide_try_kiosk" href="https://sankeerthchelley.github.io/navwithin-demo-live/#kiosk=1" target="_blank" rel="noopener">the kiosk page</a>.</p>
 </section>
 
 <section id="notes">
